@@ -1,119 +1,82 @@
 @extends('panel.app')
 @section('content')
-    <div class="container-fluid">
-        <form class="mt-4" action="{{ route('panel.qr.store') }}" method="POST">
-            @csrf
-            <div class="form-check form-check-inline">
-                <input @checked(old('qrType') === 'website') class="form-check-input" type="radio" name="qrType" id="websiteItem"
-                    value="website">
-                <label class="form-check-label" for="websiteItem">Sitio web</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input @checked(old('qrType') === 'text') class="form-check-input" type="radio" name="qrType" id="textItem"
-                    value="text">
-                <label class="form-check-label" for="textItem">Texto</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input @checked(old('qrType') === 'email') class="form-check-input" type="radio" name="qrType" id="emailItem"
-                    value="email">
-                <label class="form-check-label" for="emailItem">Correo electrónico</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input @checked(old('qrType') === 'phone') class="form-check-input" type="radio" name="qrType" id="phoneItem"
-                    value="phone">
-                <label class="form-check-label" for="phoneItem">Teléfono</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input @checked(old('qrType') === 'sms') class="form-check-input" type="radio" name="qrType" id="smsItem"
-                    value="sms">
-                <label class="form-check-label" for="smsItem">SMS</label>
-            </div>
+<div class="container-fluid">
 
-            <div class="mb-3 mt-4">
-                <label for="contentItem" id="labelContentItem" class="form-label">Contenido</label>
-                <input type="text" name="content" value="{{ old('content') }}"
-                    class="form-control @error('content') is-invalid                    
-                @enderror"
-                    id="contentItem" aria-describedby="emailHelp">
-                <p class="text-danger">
-                    @error('content')
-                        {{ $message }}
-                    @enderror
-                </p>
-                <div id="emailHelp" class="form-text">Ingresa la URL o la información que deseas agregar</div>
+   <div class="row h-100">
+      <div class="col-sm-12 col-lg-8">
+         @include('panel.includes._create-qr')
+      </div>
+
+      <div class="col-sm-12 col-lg-3 offset-lg-1 h-75 qr-border-left">
+         <div class="text-center">
+				<h3>Vista previa del QR</h3>
+            <div id="qrPreview" class="mt-3 text-center mx-auto" style="width: 300px; background-color: {{ $backgroundColor }}">
+               @include('panel.includes._qr-preview')
             </div>
-
-            <div id="emailContent" @if (old('qrType') != 'email') class="d-none" @endif>
-                <div class="mb-3 mt-4">
-                    <label for="subjectItem" class="form-label">Asunto</label>
-                    <input type="text" maxlength="50" value="{{ old('subject') }}"
-                        placeholder="Ej: Invitación al evento" name="subject"
-                        class="form-control @error('subject') is-invalid                    
-                        @enderror"
-                        id="subjectItem" aria-describedby="emailHelp">
-                    <p class="text-danger">
-                        @error('subject')
-                            {{ $message }}
-                        @enderror
-                    </p>
-                </div>
-
-                <div class="mb-3 mt-4">
-                    <label for="messageItem">Mensaje</label>
-                    <textarea name="message" id="messageItem"
-                        placeholder="Hola, te invitar al evento que se hará por parte de Ciberpaz"
-                        rows="3" maxlength="300"
-                        class="form-control @error('message') is-invalid                    
-                        @enderror">{{ old('message') }}</textarea>
-                    <p class="text-danger">
-                        @error('message')
-                            {{ $message }}
-                        @enderror
-                    </p>
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Guardar</button>
-        </form>
-    </div>
+         </div>
+      </div>
+   </div>
+</div>
 @stop
 
 @push('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js"
-        integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.slim.min.js" integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
 
-    <script type="text/javascript">
-        $('input[type=radio][name=qrType]').on('change', function() {
-            switch ($(this).val()) {
-                case 'email':
-                    $("#emailContent").removeClass('d-none');
-                    $('#labelContentItem').text("Correo electrónico de destino");
-                    $('#emailHelp').text(
-                        "Ingresa el correo electrónico al que quieres que llegue el mensaje. Ej: hola@ciberpaz.gov.co"
-                    );
-                    break;
-                case 'phone':
-                    $("#emailContent").addClass('d-none');
-                    $('#labelContentItem').text("Ingresa tu número de contacto");
-                    $('#emailHelp').text(
-                        "Ingresa tu número de contacto: Ej: 3218057515"
-                    );
-                    break;
-                case 'sms':
-                    $("#emailContent").addClass('d-none');
-                    $('#labelContentItem').text("Ingresa el número celular de destino");
-                    $('#emailHelp').text(
-                        "Ingresa el número al cual quieres que llegue el SMS"
-                    );
-                    break;
-                default:
-                    $("#emailContent").addClass('d-none');
-                    $('#labelContentItem').text("Contenido");
-                    $('#emailHelp').text(
-                        "Ingresa la URL o la información que deseas agregar"
-                    );
-                    break;
-            }
-        });
-    </script>
+<script type="text/javascript">
+   //Cambiar los formularios con base en lo que seleccione el usuario
+   $('input[type=radio][name=qrType]').on('change', function() {
+      switch ($(this).val()) {
+         case 'email':
+            $("#emailContent").removeClass('d-none');
+            $('#labelContentItem').text("Correo electrónico de destino");
+            $('#emailHelp').text(
+               "Ingresa el correo electrónico al que quieres que llegue el mensaje. Ej: hola@ciberpaz.gov.co"
+            );
+            break;
+         case 'phone':
+            $("#emailContent").addClass('d-none');
+            $('#labelContentItem').text("Ingresa tu número de contacto");
+            $('#emailHelp').text(
+               "Ingresa tu número de contacto: Ej: 3218057515"
+            );
+            break;
+         case 'sms':
+            $("#emailContent").addClass('d-none');
+            $('#labelContentItem').text("Ingresa el número celular de destino");
+            $('#emailHelp').text(
+               "Ingresa el número al cual quieres que llegue el SMS"
+            );
+            break;
+         default:
+            $("#emailContent").addClass('d-none');
+            $('#labelContentItem').text("Contenido");
+            $('#emailHelp').text(
+               "Ingresa la URL o la información que deseas agregar"
+            );
+            break;
+      }
+   });
+
+   //Mostrar el formulario de la configuración
+   $('#customizeQROption').on('change', function() {
+      if ($(this).is(':checked')) {
+         $("#configurationBlock").removeClass('d-none');
+      } else {
+         $("#configurationBlock").addClass('d-none');
+      }
+   });
+
+   //Definir la variable para cambiar el color del QR
+   let qrFrame = document.querySelector(".qrFrame");
+	qrFrame.setAttribute('fill', $('#qrColor').val());
+
+   $('#backgroundColor').on('input', function() {
+      document.getElementById('qrPreview').style.backgroundColor = $(this).val();
+   });
+
+   $('#qrColor').on('input', function() {
+      qrFrame.setAttribute('fill', $(this).val());
+   });
+
+</script>
 @endpush

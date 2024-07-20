@@ -26,7 +26,23 @@ class QrController extends Controller
 
    public function create()
    {
-      return view('panel.qr.create');
+
+      // Dividir la cadena en un array usando la coma como delimitador
+      // $color = explode(',', $defaultColor);
+      // $red = $color[0];
+      // $green = $color[1];
+      // $blue = $color[2];
+      // $alpha = $color[3];
+
+      // dd($array);
+
+      $color = '#DDD14B';
+      $backgroundColor = '#ffede3';
+      
+      return view('panel.qr.create', compact([
+         'color',
+         'backgroundColor'
+      ]));
    }
 
    public function store(Request $request)
