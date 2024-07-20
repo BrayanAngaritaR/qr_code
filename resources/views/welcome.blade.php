@@ -439,7 +439,7 @@
                 <p>Scan me to return to the original page.</p>
             </div>
 
-            <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->merge('https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1.png', .3, true)->size(200)->generate('https://ciberpaz.gov.co/')) !!} ">
+            <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->merge('https://ciberpaz.gov.co/855/channels-755_logo_micrositio.png', .3, true)->size(200)->generate('https://ciberpaz.gov.co/')) !!} ">
 
             <img width="400" src="{{ asset(env('APP_LOGO')) }}" alt="{{ asset(env('APP_LOGO')) }}">
 
