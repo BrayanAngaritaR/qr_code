@@ -2,13 +2,6 @@
 @section('content')
 <p>Lista de códigos QR</p>
 
-<div class="visible-print text-center">
-   {!! QrCode::size(100)->format('svg')->merge('https://ciberpaz.gov.co/855/channels-755_logo_micrositio.png', .3, true)->color(255, 0, 0, 75)->backgroundColor(255, 255, 0, 25)->style('round')->eye('circle')->generate('https://ciberpaz.gov.co/'); !!}
-   <p>Visitar el sitio de ciberpaz</p>
-
-	{{-- <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->merge('https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1.png', .3, true)->size(200)->generate('https://ciberpaz.gov.co/')) !!} "> --}}
-</div>
-
 <a href="{{ route('panel.qr.create') }}" class="btn btn-primary mb-4">Agregar QR</a>
 
 <div class="table-responsive">

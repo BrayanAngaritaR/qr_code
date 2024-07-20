@@ -14,11 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 #Página principal
-
-Route::get('/php', fn () => phpinfo());
-
-
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -32,6 +27,9 @@ Route::get('/dashboard', [App\Http\Controllers\Panel\DashboardController::class,
 require __DIR__ . '/auth.php';
 
 #Rutas para generar códigos QR
+
+#Ruta para verificar el código QR con imagen de fondo
+Route::view('/qr-prueba', 'user.qr_prueba');
 Route::get('/dashboard/qr', [App\Http\Controllers\Panel\QrController::class, 'index'])->name('panel.qr.index');
 Route::get('/dashboard/qr/create', [App\Http\Controllers\Panel\QrController::class, 'create'])->name('panel.qr.create');
 Route::post('/dashboard/qr/create', [App\Http\Controllers\Panel\QrController::class, 'store'])->name('panel.qr.store');
