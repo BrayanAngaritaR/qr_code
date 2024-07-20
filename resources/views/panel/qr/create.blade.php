@@ -47,7 +47,7 @@
                 <div class="mb-3 mt-4">
                     <label for="subjectItem" class="form-label">Asunto</label>
                     <input type="text" maxlength="50" value="{{ old('subject') }}"
-                        placeholder="Me he registrado en www.bepro.digital" name="subject"
+                        placeholder="Ej: Invitación al evento" name="subject"
                         class="form-control @error('subject') is-invalid                    
                         @enderror"
                         id="subjectItem" aria-describedby="emailHelp">
@@ -61,7 +61,7 @@
                 <div class="mb-3 mt-4">
                     <label for="messageItem">Mensaje</label>
                     <textarea name="message" id="messageItem"
-                        placeholder="Hola, te quiero contar que me he registrado en BePro Digital y me he suscrito en el canal de YouTube."
+                        placeholder="Hola, te invitar al evento que se hará por parte de Ciberpaz"
                         rows="3" maxlength="300"
                         class="form-control @error('message') is-invalid                    
                         @enderror">{{ old('message') }}</textarea>
@@ -89,7 +89,7 @@
                     $("#emailContent").removeClass('d-none');
                     $('#labelContentItem').text("Correo electrónico de destino");
                     $('#emailHelp').text(
-                        "Ingresa el correo electrónico al que quieres que llegue el mensaje. Ej: info@bepro.digital"
+                        "Ingresa el correo electrónico al que quieres que llegue el mensaje. Ej: hola@ciberpaz.gov.co"
                     );
                     break;
                 case 'phone':

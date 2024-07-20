@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('panel/css/root.min.css') }}" />
 
     @stack('styles')
-    <title>Panel de administración - BePro Digital</title>
+    <title>Panel de administración - Ciberpaz</title>
 </head>
 
 <body id="body">

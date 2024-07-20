@@ -2,8 +2,8 @@
     <div>
         <div class="nav_brand">
             <ion-icon name="menu-outline" class="nav_toggle" id="nav-toggle"></ion-icon>
-            <a href="#" class="nav_logo">
-                <img src="https://bepro.digital/assets/img/bepro_digital_logo_white.webp" width="70" />
+            <a href="{{ route('dashboard') }}" class="nav_logo">
+                <img src="{{ asset('img/logo.png') }}" width="70" />
             </a>
         </div>
     </div>
