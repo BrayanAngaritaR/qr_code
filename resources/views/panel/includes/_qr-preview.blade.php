@@ -1,6 +1,28 @@
-<svg class="qrFrame" fill="var(--fillColor)" xmlns="http://www.w3.org/2000/svg" height="300px" viewBox="0 -960 960 960" width="300px">
-   <path d="M520-120v-80h80v80h-80Zm-80-80v-200h80v200h-80Zm320-120v-160h80v160h-80Zm-80-160v-80h80v80h-80Zm-480 80v-80h80v80h-80Zm-80-80v-80h80v80h-80Zm360-280v-80h80v80h-80ZM170-650h140v-140H170v140Zm-50 50v-240h240v240H120Zm50 430h140v-140H170v140Zm-50 50v-240h240v240H120Zm530-530h140v-140H650v140Zm-50 50v-240h240v240H600Zm80 480v-120h-80v-80h160v120h80v80H680ZM520-400v-80h160v80H520Zm-160 0v-80h-80v-80h240v80h-80v80h-80Zm40-200v-160h80v80h80v80H400Zm-190-90v-60h60v60h-60Zm0 480v-60h60v60h-60Zm480-480v-60h60v60h-60Z"/>
-</svg>
+<div class="text-center">
+   <h3>Vista previa del QR</h3>
+
+   <div id="qrPreview" class="mt-3 text-center mx-auto" style="width: 300px; background-color: {{ $backgroundColor }}">
+      <div class="image_wrapper">
+         <div id="squaredQR">
+            @include('panel.includes.qr._squared')
+         </div>
+
+         <div id="dotsQR" class="d-none">
+            @include('panel.includes.qr._dot')
+         </div>
+
+         <div id="roundQR" class="d-none">
+            @include('panel.includes.qr._round')
+         </div>
+
+         <div class="overlay overlay_1 d-none" id="addLogo">
+            <img src="{{ asset('img/bg_qr.jpg') }}" class="rounded" width="50" alt="">
+         </div>
+      </div>
+   </div>
+
+   <small>El resultado final puede variar</small>
+</div>
 
 @push('styles')
 <style>
@@ -8,8 +30,51 @@
       --fillColor: #98a715;
    }
 
-   .qr-border-left{
+   .qr-border-left {
       border-left: 1px solid #cdcdcd;
+   }
+
+   .image_wrapper {
+      position: relative;
+   }
+
+   .form-control-color{
+      width: 6rem;
+      height: 50px;
+   }
+
+   .overlay {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+   }
+
+   .overlay_1 {
+      left: 0;
+      bottom: 100px;
+      width: 100%;
+      padding: 1rem;
+   }
+
+   /* HIDE RADIO */
+   [type=radio].qr-selector {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+   }
+
+   /* IMAGE STYLES */
+   [type=radio].qr-selector + svg {
+      cursor: pointer;
+      padding: 5px;
+   }
+
+   /* CHECKED STYLES */
+   [type=radio].qr-selector:checked+svg {
+      outline: 2px solid #26284f;
+
    }
 </style>
 @endpush

@@ -69,50 +69,55 @@
       </div>
    </div>
 
-   <div id="configurationBlock" class=" mt-3">
-      <div class="row">
-         <div class="col-sm-12 col-md-4">
-            <label for="backgroundColor" class="form-label">Color del fondo</label>
-            <input type="color" value="{{ $backgroundColor }}" name="backgroundColor" class="form-control form-control-color" id="backgroundColor" aria-describedby="backgroundColor">
-         </div>
-
-         <div class="col-sm-12 col-md-4">
-            <label for="qrColor" class="form-label">Color del QR</label>
-            <input type="color" value="{{ $color }}" name="qrColor" class="form-control form-control-color" id="qrColor" aria-describedby="qrColor">
-         </div>
+   <div id="configurationBlock" class="d-none mt-3">
+      <div class="row border p-4 rounded m-1">
 
          <div class="col-sm-12">
             <label class="form-label">Estilo del QR</label>
 
-            <div>
-               <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="qrType" id="websiteItem" value="website">
-                  <label class="form-check-label" for="websiteItem">Cuadrado</label>
+            <div class="mb-4">
+               <div class="form-check form-check-inline p-0">
+                  <label class="form-check-label" for="squaredItem">
+                     <input class="form-check-input qr-selector" checkeds type="radio" name="qrForm" id="squaredItem" value="square">
+                     {!! QrCode::size(100)->format('svg')->generate('-'); !!}
+                  </label>
                </div>
                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="qrType" id="textItem" value="text">
-                  <label class="form-check-label" for="textItem">Con puntos</label>
+                  <label class="form-check-label" for="dotItem">
+                     <input class="form-check-input qr-selector" type="radio" name="qrForm" id="dotItem" value="dot">
+                     {!! QrCode::size(100)->style('dot')->format('svg')->generate('https://ciberpaz.gov.co/'); !!}
+                  </label>
                </div>
                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="qrType" id="emailItem" value="email">
-                  <label class="form-check-label" for="emailItem">Redondo</label>
+                  <label class="form-check-label" for="roundItem">
+                     <input class="form-check-input qr-selector" type="radio" name="qrForm" id="roundItem" value="round">
+                     {!! QrCode::size(100)->style('round')->format('svg')->generate('https://ciberpaz.gov.co/'); !!}
+                  </label>
                </div>
             </div>
-
          </div>
 
          <div class="col-sm-12">
-            <label class="form-label">Estilo de los ojos</label>
+            <div class="form-check form-switch">
+               <input class="form-check-input" type="checkbox" name="addLogo" role="switch" id="addLogoSelector">
+               <label class="form-check-label" for="addLogoSelector">Agregar logo</label>
+            </div>
+         </div>
 
-            <div>
-               <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="qrType" id="websiteItem" value="website">
-                  <label class="form-check-label" for="websiteItem">Cuadrado</label>
-               </div>
-               <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="qrType" id="textItem" value="text">
-                  <label class="form-check-label" for="textItem">Con puntos</label>
-               </div>
+         <div class="col-sm-12 mt-3">
+            <label for="backgroundColor" class="form-label">Color del fondo</label>
+            <input type="color" value="{{ $backgroundColor }}" name="backgroundColor" class="form-control form-control-color" id="backgroundColor" aria-describedby="backgroundColor">
+         </div>
+
+         <div class="col-sm-12 mt-3">
+            <label for="qrColor" class="form-label">Color del QR</label>
+            <input type="color" value="{{ $color }}" name="qrColor" class="form-control form-control-color" id="qrColor" aria-describedby="qrColor">
+         </div>
+
+         <div class="col-sm-12 mt-3">
+            <div class="form-check form-switch">
+               <input class="form-check-input" type="checkbox" name="saveSetting" role="switch" id="saveSettingSelector">
+               <label class="form-check-label" for="saveSettingSelector">Guardar configuración</label>
             </div>
          </div>
       </div>

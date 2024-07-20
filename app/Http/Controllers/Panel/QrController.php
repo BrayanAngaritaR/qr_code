@@ -38,15 +38,39 @@ class QrController extends Controller
 
       $color = '#DDD14B';
       $backgroundColor = '#ffede3';
-      
+
       return view('panel.qr.create', compact([
          'color',
          'backgroundColor'
       ]));
    }
 
+   function hexToRgb($hex, $alpha = false)
+   {
+      $hex      = str_replace('#', '', $hex);
+      $length   = strlen($hex);
+      $rgb['r'] = hexdec($length == 6 ? substr($hex, 0, 2) : ($length == 3 ? str_repeat(substr($hex, 0, 1), 2) : 0));
+      $rgb['g'] = hexdec($length == 6 ? substr($hex, 2, 2) : ($length == 3 ? str_repeat(substr($hex, 1, 1), 2) : 0));
+      $rgb['b'] = hexdec($length == 6 ? substr($hex, 4, 2) : ($length == 3 ? str_repeat(substr($hex, 2, 1), 2) : 0));
+      if ($alpha) {
+         $rgb['a'] = $alpha;
+      }
+      return $rgb;
+   }
+
    public function store(Request $request)
    {
+      //Definir valores por defecto
+      $logo = false;
+      $backgroundColor = $this->hexToRgb($request->backgroundColor);
+      $qrColor = $this->hexToRgb($request->qrColor);
+
+      if($request->qrForm){
+         $qrForm = $request->qrForm;
+      } else {
+         $qrForm = 'square';
+      }
+
       //Crear las reglas de validación
       $rules = [
          'content' => 'required'
@@ -76,13 +100,32 @@ class QrController extends Controller
       //Asignar el nombre a la imagen (QR)
       $imageName = 'img-' . $code . '.svg';
 
+      //Verificar si agregar el logo o no
+      if ($request->addLogo) {
+         $logo = true;
+      }
+
+      //Verificar si el usuario quiere cambiar la configuración
+      if ($request->saveSetting) {
+         //Actualizar la configuración en la base de datos
+      }
+
       //Especificar/Obtener el tipo de QR a generar 
       switch ($request->qrType) {
          case ('phone'):
-            $image = QrCode::margin(2)->format('svg')->size(500)->errorCorrection('H')->phoneNumber($request->content);
+            if ($logo) {
+               $image = QrCode::margin(2)->format('png')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->merge('https://ciberpaz.gov.co/855/channels-755_logo_micrositio.png', .3, true)->errorCorrection('H')->phoneNumber($request->content);
+            } else {
+               $image = QrCode::margin(2)->format('svg')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->errorCorrection('H')->phoneNumber($request->content);
+            }
             break;
          case ('sms'):
-            $image = QrCode::margin(2)->format('svg')->size(500)->errorCorrection('H')->SMS($request->content);
+
+            if ($logo) {
+               $image = QrCode::margin(2)->format('png')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->merge('https://ciberpaz.gov.co/855/channels-755_logo_micrositio.png', .3, true)->errorCorrection('H')->SMS($request->content);
+            } else {
+               $image = QrCode::margin(2)->format('svg')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->errorCorrection('H')->SMS($request->content);
+            }
             break;
          case ('email'):
             //Crear las reglas de validación
@@ -105,10 +148,19 @@ class QrController extends Controller
             $this->validate($request, $rules, $customMessages);
 
             //email, subject, message
-            $image = QrCode::margin(2)->format('svg')->size(500)->errorCorrection('H')->email($request->content, $request->subject, $request->message);
+            if ($logo) {
+               $image = QrCode::margin(2)->format('png')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->merge('https://ciberpaz.gov.co/855/channels-755_logo_micrositio.png', .3, true)->errorCorrection('H')->email($request->content, $request->subject, $request->message);
+            } else {
+               $image = QrCode::margin(2)->format('svg')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->errorCorrection('H')->email($request->content, $request->subject, $request->message);
+            }
+
             break;
          default:
-            $image = QrCode::margin(2)->format('svg')->size(500)->errorCorrection('H')->generate($slug);
+            if ($logo) {
+               $image = QrCode::margin(2)->format('png')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->merge('https://ciberpaz.gov.co/855/channels-755_logo_micrositio.png', .3, true)->generate($slug);
+            } else {
+               $image = QrCode::margin(2)->format('svg')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->errorCorrection('H')->generate($slug);
+            }
       }
 
       $content = $request->content;
