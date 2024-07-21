@@ -78,19 +78,19 @@
             <div class="mb-4">
                <div class="form-check form-check-inline p-0">
                   <label class="form-check-label" for="squaredItem">
-                     <input class="form-check-input qr-selector" checkeds type="radio" name="qrForm" id="squaredItem" value="square">
+                     <input class="form-check-input qr-selector" checkeds type="radio" name="qrForm" id="squaredItem" @checked($qr_settings->qr_type === 'square') value="square">
                      {!! QrCode::size(100)->format('svg')->generate('-'); !!}
                   </label>
                </div>
                <div class="form-check form-check-inline">
                   <label class="form-check-label" for="dotItem">
-                     <input class="form-check-input qr-selector" type="radio" name="qrForm" id="dotItem" value="dot">
+                     <input class="form-check-input qr-selector" type="radio" name="qrForm" id="dotItem" @checked($qr_settings->qr_type === 'dot') value="dot">
                      {!! QrCode::size(100)->style('dot')->format('svg')->generate('https://ciberpaz.gov.co/'); !!}
                   </label>
                </div>
                <div class="form-check form-check-inline">
                   <label class="form-check-label" for="roundItem">
-                     <input class="form-check-input qr-selector" type="radio" name="qrForm" id="roundItem" value="round">
+                     <input class="form-check-input qr-selector" type="radio" name="qrForm" id="roundItem" @checked($qr_settings->qr_type === 'round') value="round">
                      {!! QrCode::size(100)->style('round')->format('svg')->generate('https://ciberpaz.gov.co/'); !!}
                   </label>
                </div>
@@ -118,6 +118,12 @@
                   <label class="form-check-label" for="alternativeLogo">
                      <input @checked($qr_settings->selected_logo != 'main_logo') class="form-check-input qr-selector" type="radio" name="qrSelectedImage" id="alternativeLogo" value="alternative_logo">
                      <img src="{{ asset($qr_settings->alternative_logo) }}" width="80" alt="">
+                  </label>
+               </div>
+               <div class="form-check form-check-inline">
+                  <label class="form-check-label" for="none">
+                     <input @checked($qr_settings->selected_logo === 'none') class="form-check-input qr-selector" type="radio" name="qrSelectedImage" id="none" value="none">
+                     <img src="{{ asset('img/none.png') }}" width="80" alt="">
                   </label>
                </div>
             </div>

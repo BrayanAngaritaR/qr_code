@@ -107,24 +107,23 @@ class QrController extends Controller
       //Verificar si el usuario quiere cambiar la configuración
       if ($request->saveSetting) {
          //Actualizar la configuración en la base de datos
+
+         $qr_settings = QrSetting::first();
+         $qr_settings->qr_type = $request->qrForm;
+         $qr_settings->selected_logo = $request->qrSelectedImage;
+         $qr_settings->background = $request->backgroundColor;
+         $qr_settings->color = $request->qrColor;
+         $qr_settings->update();
       }
 
       //Especificar/Obtener el tipo de QR a generar 
       switch ($request->qrType) {
          case ('phone'):
-            if ($logo) {
-               $image = QrCode::margin(2)->format('png')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->merge('https://ciberpaz.gov.co/855/channels-755_logo_micrositio.png', .3, true)->errorCorrection('H')->phoneNumber($request->content);
-            } else {
-               $image = QrCode::margin(2)->format('svg')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->errorCorrection('H')->phoneNumber($request->content);
-            }
+            $image = QrCode::margin(2)->format('svg')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->errorCorrection('H')->phoneNumber($request->content);
             break;
          case ('sms'):
 
-            if ($logo) {
-               $image = QrCode::margin(2)->format('png')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->merge('https://ciberpaz.gov.co/855/channels-755_logo_micrositio.png', .3, true)->errorCorrection('H')->SMS($request->content);
-            } else {
-               $image = QrCode::margin(2)->format('svg')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->errorCorrection('H')->SMS($request->content);
-            }
+            $image = QrCode::margin(2)->format('svg')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->errorCorrection('H')->SMS($request->content);
             break;
          case ('email'):
             //Crear las reglas de validación
@@ -147,21 +146,12 @@ class QrController extends Controller
             $this->validate($request, $rules, $customMessages);
 
             //email, subject, message
-            if ($logo) {
-               $image = QrCode::margin(2)->format('png')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->merge('https://ciberpaz.gov.co/855/channels-755_logo_micrositio.png', .3, true)->errorCorrection('H')->email($request->content, $request->subject, $request->message);
-            } else {
-               $image = QrCode::margin(2)->format('svg')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->errorCorrection('H')->email($request->content, $request->subject, $request->message);
-            }
-
+            $image = QrCode::margin(2)->format('svg')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->errorCorrection('H')->email($request->content, $request->subject, $request->message);
             break;
+
          default:
             $image = QrCode::margin(2)->format('svg')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->errorCorrection('H')->generate($slug);
-
-            // if ($logo) {
-            //    $image = QrCode::margin(2)->format('png')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->merge('https://ciberpaz.gov.co/855/channels-755_logo_micrositio.png', .3, true)->generate($slug);
-            // } else {
-               
-            // }
+            break;
       }
 
       $content = $request->content;

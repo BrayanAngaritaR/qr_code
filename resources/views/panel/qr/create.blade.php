@@ -104,6 +104,9 @@
       if(logo === 'main_logo'){
          $("#displayMainLogo").removeClass('d-none');
          $("#displayAlternativeLogo").addClass('d-none');
+      } else if(logo === 'none') {
+         $("#displayAlternativeLogo").addClass('d-none');
+         $("#displayMainLogo").addClass('d-none');
       } else {
          $("#displayAlternativeLogo").removeClass('d-none');
          $("#displayMainLogo").addClass('d-none');

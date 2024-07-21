@@ -15,11 +15,11 @@
             @include('panel.includes.qr._round')
          </div>
 
-         <div class="overlay overlay_1 d-none" id="displayMainLogo">
+         <div class="overlay overlay_1 @if($qr_settings->selected_logo != 'main_logo') d-none @endif" id="displayMainLogo">
             <img src="{{ asset($qr_settings->main_logo) }}" class="rounded" width="50" alt="">
          </div>
 
-         <div class="overlay overlay_1 d-none" id="displayAlternativeLogo">
+         <div class="overlay overlay_1 @if($qr_settings->selected_logo != 'alternative_logo') d-none @endif" id="displayAlternativeLogo">
             <img src="{{ asset($qr_settings->alternative_logo) }}" class="rounded" width="50" alt="">
          </div>
       </div>

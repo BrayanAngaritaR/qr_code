@@ -96,7 +96,8 @@ class SettingController extends Controller
 			'alternative_logo',
 			'background',
 			'color',
-			'selected_logo'
+			'selected_logo',
+			'qr_settings'
 		]));
 	}
 

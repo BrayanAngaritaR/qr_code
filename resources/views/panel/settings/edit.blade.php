@@ -54,9 +54,10 @@
          <div class="input-group my-3">
             <label class="input-group-text" for="qr_alternative_logo"></label>
             <select name="selected_logo" id="selected_logo" class="form-select">
-               <option value="main_logo">Logo principal</option>
-               <option value="alternative_logo">Logo alternativo</option>
-            </select>
+               <option @selected($qr_settings->selected_logo === 'none') value="none">Ninguno</option>
+               <option @selected($qr_settings->selected_logo === 'main_logo') value="main_logo">Logo principal</option>
+               <option @selected($qr_settings->selected_logo === 'alternative_logo') value="alternative_logo">Logo alternativo</option>
+            </select>  
          </div>
       </div>
 
