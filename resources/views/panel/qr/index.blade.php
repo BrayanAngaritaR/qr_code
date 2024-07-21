@@ -24,9 +24,14 @@
                <div class="mt-3 text-center mx-auto">
                   <div class="image_wrapper">
                      <img src="{{ asset('storage/' . $code->path) }}" width="100" alt="">
-                     @if($code->has_logo)
+                     @if($code->logo === 'main_logo') 
                      <div class="overlay logo_list">
-                        <img src="{{ asset('img/bg_qr.jpg') }}" class="rounded" width="25" alt="">
+                        <img class="rounded" src="{{ asset($qr_settings->main_logo) }}" width="25" alt="">
+                     </div>
+                     @endif 
+                     @if($code->logo === 'alternative_logo') 
+                     <div class="overlay logo_list">
+                        <img class="rounded" src="{{ asset($qr_settings->alternative_logo) }}" width="25" alt="">
                      </div>
                      @endif
                   </div>

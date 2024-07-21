@@ -4,9 +4,15 @@
 <div id="exportQR">
    <div class="image_wrapper">
       <img class="img-fluid" src="{{ asset('storage/' . $qr->path) }}" width="1920" alt="">
-      @if($qr->has_logo)
+      
+      @if($qr->logo === 'main_logo')
       <div class="overlay export_qr">
-         <img src="{{ asset('img/bg_qr.jpg') }}" class="rounded" width="480" alt="">
+         <img class="rounded" src="{{ asset($qr_settings->main_logo) }}" width="300" alt="">
+      </div>
+      @endif
+      @if($qr->logo === 'alternative_logo')
+      <div class="overlay export_qr">
+         <img class="rounded" src="{{ asset($qr_settings->alternative_logo) }}" width="300" alt="">
       </div>
       @endif
    </div>

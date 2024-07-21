@@ -21,13 +21,15 @@ class QrController extends Controller
 
    public function index()
    {
+      $qr_settings = QrSetting::first();
       $qr_codes = Qr::where('user_id', Auth::id())->latest()->get();
-      return view('panel.qr.index', compact('qr_codes'));
+      return view('panel.qr.index', compact(['qr_codes', 'qr_settings']));
    }
 
    public function show(Qr $qr)
    {
-      return view('panel.qr.show', compact('qr'));
+      $qr_settings = QrSetting::first();
+      return view('panel.qr.show', compact(['qr', 'qr_settings'])); 
    }
 
    public function create()
@@ -60,7 +62,7 @@ class QrController extends Controller
    public function store(Request $request)
    {
       //Definir valores por defecto
-      $logo = false;
+      $logo = $request->qrSelectedImage; 
       $backgroundColor = $this->hexToRgb($request->backgroundColor);
       $qrColor = $this->hexToRgb($request->qrColor);
 
@@ -98,11 +100,6 @@ class QrController extends Controller
 
       //Asignar el nombre a la imagen (QR)
       $imageName = 'img-' . $code . '.svg';
-
-      //Verificar si agregar el logo o no
-      if ($request->addLogo) {
-         $logo = true;
-      }
 
       //Verificar si el usuario quiere cambiar la configuración
       if ($request->saveSetting) {
@@ -165,7 +162,7 @@ class QrController extends Controller
          'code' => $code,
          'slug' => $slug,
          'path' => $path,
-         'has_logo' => $logo,
+         'logo' => $logo,
          'redirect_to' => $content, //Website, Text,...
          'type' => $request->qrType,
          'user_id' => Auth::id(),

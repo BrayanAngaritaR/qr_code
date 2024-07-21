@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
 	public function run()
 	{
 		QrSetting::create([
+			'main_logo' => 'img/bg_qr.jpg',
+			'alternative_logo' => 'img/bg_qr_alternative.jpg',
 			'background' => '4287f5'
 		]);
 	}

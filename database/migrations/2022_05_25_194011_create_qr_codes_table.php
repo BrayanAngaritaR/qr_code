@@ -20,7 +20,7 @@ return new class extends Migration
 			$table->string('path')->nullable();
 			$table->text('redirect_to')->nullable();
 			$table->string('type'); //URL, Contact, Text, Email...
-			$table->boolean('has_logo')->default(false);
+			$table->string('logo')->default('none');
 			$table->unsignedBigInteger('user_id');
 			$table->foreign('user_id')
 				->references('id')
