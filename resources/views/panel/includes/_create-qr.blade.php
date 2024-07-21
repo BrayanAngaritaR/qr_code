@@ -4,7 +4,7 @@
    <h4>Tipo de QR</h4>
 
    <div class="form-check form-check-inline">
-      <input @checked(old('qrType')==='website' ) class="form-check-input" type="radio" name="qrType" id="websiteItem" value="website">
+      <input @checked(old('qrType')==='website') checked class="form-check-input" type="radio" name="qrType" id="websiteItem" value="website">
       <label class="form-check-label" for="websiteItem">Sitio web</label>
    </div>
    <div class="form-check form-check-inline">
@@ -124,6 +124,6 @@
    </div>
 
    <div class="text-end">
-      <button type="submit" class="btn btn-primary mt-5">Guardar</button>
+      <button type="submit" class="btn btn-dark mt-5">Guardar</button>
    </div>
 </form>
