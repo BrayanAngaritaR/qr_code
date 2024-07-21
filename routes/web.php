@@ -43,4 +43,5 @@ Route::get('/dashboard/settings/edit', [App\Http\Controllers\Panel\SettingContro
 Route::post('/dashboard/settings/edit', [App\Http\Controllers\Panel\SettingController::class, 'update'])->name('panel.settings.update');
 
 #Ruta para mostrar la información del QR
+Route::get('/dashboard/qr/{qr}', [App\Http\Controllers\Panel\QrController::class, 'show'])->name('panel.qr.show');
 Route::get('/{code}', [App\Http\Controllers\User\QrController::class, 'show'])->name('user.qr.show');

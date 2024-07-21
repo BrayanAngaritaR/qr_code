@@ -24,18 +24,13 @@ class QrController extends Controller
       return view('panel.qr.index', compact('qr_codes'));
    }
 
+   public function show(Qr $qr)
+   {
+      return view('panel.qr.show', compact('qr'));
+   }
+
    public function create()
    {
-
-      // Dividir la cadena en un array usando la coma como delimitador
-      // $color = explode(',', $defaultColor);
-      // $red = $color[0];
-      // $green = $color[1];
-      // $blue = $color[2];
-      // $alpha = $color[3];
-
-      // dd($array);
-
       $color = '#DDD14B';
       $backgroundColor = '#ffede3';
 
@@ -156,11 +151,13 @@ class QrController extends Controller
 
             break;
          default:
-            if ($logo) {
-               $image = QrCode::margin(2)->format('png')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->merge('https://ciberpaz.gov.co/855/channels-755_logo_micrositio.png', .3, true)->generate($slug);
-            } else {
-               $image = QrCode::margin(2)->format('svg')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->errorCorrection('H')->generate($slug);
-            }
+            $image = QrCode::margin(2)->format('svg')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->errorCorrection('H')->generate($slug);
+
+            // if ($logo) {
+            //    $image = QrCode::margin(2)->format('png')->size(500)->style($qrForm)->color($qrColor['r'], $qrColor['g'], $qrColor['b'])->backgroundColor($backgroundColor['r'], $backgroundColor['g'], $backgroundColor['b'])->merge('https://ciberpaz.gov.co/855/channels-755_logo_micrositio.png', .3, true)->generate($slug);
+            // } else {
+               
+            // }
       }
 
       $content = $request->content;
@@ -174,6 +171,7 @@ class QrController extends Controller
          'code' => $code,
          'slug' => $slug,
          'path' => $path,
+         'has_logo' => $logo,
          'redirect_to' => $content, //Website, Text,...
          'type' => $request->qrType,
          'user_id' => Auth::id(),
