@@ -63,11 +63,16 @@
 
 	//Mostrar el logo
    $('#addLogoSelector').on('change', function() {
+      setLogoToQR($('input[type=radio][name=qrSelectedImage]').val());
       if ($(this).is(':checked')) {
-         $("#addLogo").removeClass('d-none');
+         $("#logoSelector").removeClass('d-none');
       } else {
-         $("#addLogo").addClass('d-none');
+         $("#logoSelector").addClass('d-none');
       }
+   });
+
+   $('input[type=radio][name=qrSelectedImage]').on('change', function() {
+      setLogoToQR($(this).val());
    });
 
 	//Cambiar los formularios con base en lo que seleccione el usuario
@@ -94,6 +99,16 @@
             break;
       }
 	}
+
+   function setLogoToQR(logo){
+      if(logo === 'main_logo'){
+         $("#displayMainLogo").removeClass('d-none');
+         $("#displayAlternativeLogo").addClass('d-none');
+      } else {
+         $("#displayAlternativeLogo").removeClass('d-none');
+         $("#displayMainLogo").addClass('d-none');
+      }
+   }
 	
    //Definir la variable para cambiar el color del QR
    let qrFrame = document.querySelector(".qrFrame");

@@ -15,8 +15,12 @@
             @include('panel.includes.qr._round')
          </div>
 
-         <div class="overlay overlay_1 d-none" id="addLogo">
-            <img src="{{ asset('img/bg_qr.jpg') }}" class="rounded" width="50" alt="">
+         <div class="overlay overlay_1 d-none" id="displayMainLogo">
+            <img src="{{ asset($qr_settings->main_logo) }}" class="rounded" width="50" alt="">
+         </div>
+
+         <div class="overlay overlay_1 d-none" id="displayAlternativeLogo">
+            <img src="{{ asset($qr_settings->alternative_logo) }}" class="rounded" width="50" alt="">
          </div>
       </div>
    </div>

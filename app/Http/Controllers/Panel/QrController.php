@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Panel;
 use App\Models\User\Qr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\QrSetting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
@@ -31,12 +32,15 @@ class QrController extends Controller
 
    public function create()
    {
-      $color = '#DDD14B';
-      $backgroundColor = '#ffede3';
+      $qr_settings = QrSetting::first();
+
+      $color = $qr_settings->color;
+      $backgroundColor = $qr_settings->background;
 
       return view('panel.qr.create', compact([
          'color',
-         'backgroundColor'
+         'backgroundColor',
+         'qr_settings'
       ]));
    }
 

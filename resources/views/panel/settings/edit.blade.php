@@ -152,7 +152,7 @@
       </div>
 
       <div class="col-sm-12 text-end mt-4">
-         <button type="submit" class="btn btn-primary">
+         <button type="submit" class="btn btn-dark">
             Actualizar
          </button>
       </div>

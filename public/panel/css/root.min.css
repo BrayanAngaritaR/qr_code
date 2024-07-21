@@ -54,13 +54,12 @@
 }
 
 /* IMAGE STYLES */
-[type=radio].qr-selector + svg {
+[type=radio].qr-selector + svg, [type=radio].qr-selector + img {
    cursor: pointer;
    padding: 5px;
 }
 
 /* CHECKED STYLES */
-[type=radio].qr-selector:checked+svg {
+[type=radio].qr-selector:checked+svg, [type=radio].qr-selector:checked + img {
    outline: 2px solid #26284f;
-
 }

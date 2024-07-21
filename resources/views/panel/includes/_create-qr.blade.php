@@ -104,6 +104,25 @@
             </div>
          </div>
 
+         <div class="col-sm-12 mt-3 d-none" id="logoSelector">
+            <label class="form-label">Estilo del logo</label>
+
+            <div class="mb-4">
+               <div class="form-check form-check-inline p-0">
+                  <label class="form-check-label" for="mainLogo">
+                     <input @checked($qr_settings->selected_logo === 'main_logo') class="form-check-input qr-selector" checkeds type="radio" name="qrSelectedImage" id="mainLogo" value="main_logo">
+                     <img src="{{ asset($qr_settings->main_logo) }}" width="80" alt="">
+                  </label>
+               </div>
+               <div class="form-check form-check-inline">
+                  <label class="form-check-label" for="alternativeLogo">
+                     <input @checked($qr_settings->selected_logo != 'main_logo') class="form-check-input qr-selector" type="radio" name="qrSelectedImage" id="alternativeLogo" value="alternative_logo">
+                     <img src="{{ asset($qr_settings->alternative_logo) }}" width="80" alt="">
+                  </label>
+               </div>
+            </div>
+         </div>
+
          <div class="col-sm-12 mt-3">
             <label for="backgroundColor" class="form-label">Color del fondo</label>
             <input type="color" value="{{ $backgroundColor }}" name="backgroundColor" class="form-control form-control-color" id="backgroundColor" aria-describedby="backgroundColor">

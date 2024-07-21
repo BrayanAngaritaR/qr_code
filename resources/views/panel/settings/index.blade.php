@@ -87,7 +87,7 @@
       </div>
 
       <div class="col-sm-12 text-end mt-4">
-         <a href="{{ route('panel.settings.edit') }}" class="btn btn-primary">
+         <a href="{{ route('panel.settings.edit') }}" class="btn btn-dark">
             Editar
          </a>
       </div>
